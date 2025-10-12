@@ -1,0 +1,9 @@
+{
+  "short_name": "Siksha_Setu",
+  "name": "Siksha_Setu - Student Management System",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff"
+}

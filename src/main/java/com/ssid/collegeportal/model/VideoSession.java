@@ -1,9 +1,9 @@
 package com.ssid.collegeportal.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -37,7 +37,7 @@ public class VideoSession {
 
     @ElementCollection
     @CollectionTable(name = "video_session_participants",
-                     joinColumns = @JoinColumn(name = "video_session_id"))
+            joinColumns = @JoinColumn(name = "video_session_id"))
     @Column(name = "participant_id")
     private List<Long> participantIds = new ArrayList<>();
 

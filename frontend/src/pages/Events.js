@@ -13,6 +13,8 @@ import {
 import Modal from '../components/common/Modal';
 import ConfirmDialog from '../components/common/ConfirmDialog';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import SimplePagination from '../components/common/SimplePagination';
+import useSimplePagination from '../hooks/useSimplePagination';
 
 const Events = () => {
   const { hasAnyRole } = useAuth();
@@ -104,6 +106,10 @@ const Events = () => {
     }
   };
 
+  // Use pagination hook
+  const pagination = useSimplePagination(events, 6); // Show 6 events per page
+  const { paginatedData: displayedEvents, currentPage, totalPages, totalItems, goToPage } = pagination;
+
   if (loading) {
     return <LoadingSpinner text="Loading events..." />;
   }
@@ -129,7 +135,7 @@ const Events = () => {
 
       {/* Events Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {events.map((event) => (
+        {displayedEvents.map((event) => (
           <div key={event.id} className="card hover:shadow-md transition-shadow">
             <div className="flex justify-between items-start mb-4">
               <div className="flex-1">
@@ -197,6 +203,15 @@ const Events = () => {
           )}
         </div>
       )}
+
+      {/* Pagination */}
+      <SimplePagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={goToPage}
+        itemsPerPage={6}
+        totalItems={totalItems}
+      />
 
       {/* Event Modal */}
       <Modal

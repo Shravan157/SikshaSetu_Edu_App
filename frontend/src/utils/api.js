@@ -86,7 +86,7 @@ export const branchAPI = {
 
 // Attendance API
 export const attendanceAPI = {
-  getAllAttendance: () => api.get('/attendance'),
+  getAllAttendance: (params = {}) => api.get('/attendance', { params }),
   getAttendanceById: (id) => api.get(`/attendance/${id}`),
   getMyAttendance: () => api.get('/attendance/my'),
   getAttendanceByStudent: (studentId) => api.get(`/attendance/student/${studentId}`),
@@ -110,7 +110,7 @@ export const notificationAPI = {
 
 // Event API
 export const eventAPI = {
-  getAllEvents: () => api.get('/events'),
+  getAllEvents: (params = {}) => api.get('/events', { params }),
   getEventById: (id) => api.get(`/events/${id}`),
   createEvent: (eventData) => {
     const formData = new FormData();

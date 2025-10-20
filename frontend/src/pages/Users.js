@@ -78,6 +78,7 @@ const Users = () => {
   const handleRoleChange = async (userId, newRole) => {
     try {
       await userAPI.changeUserRole(userId, newRole);
+      // Update the user in the list with the new role
       setUsers(users.map(u => 
         u.id === userId 
           ? { ...u, roles: [newRole] }
@@ -85,7 +86,9 @@ const Users = () => {
       ));
       toast.success('User role updated successfully');
     } catch (error) {
-      toast.error('Failed to update user role');
+      console.error('Role change error:', error);
+      const errorMessage = error.response?.data || 'Failed to update user role';
+      toast.error(errorMessage);
     }
   };
 

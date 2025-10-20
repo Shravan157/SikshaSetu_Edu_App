@@ -13,9 +13,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.stream.Collectors;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/users")
@@ -172,19 +174,68 @@ public class UserController {
 
     @PutMapping("/{userId}/role")
     @PreAuthorize("hasRole('ADMIN')")
+    @Transactional
     public ResponseEntity<String> changeUserRole(@PathVariable Long userId, @RequestParam String role) {
-        User user = userRepository.findById(userId).orElse(null);
-        if (user == null) {
-            return ResponseEntity.notFound().build();
+        try {
+            User user = userRepository.findById(userId).orElse(null);
+            if (user == null) {
+                return ResponseEntity.notFound().build();
+            }
+            
+            String currentUserEmail = getCurrentUserEmail();
+            if (user.getEmail().equals(currentUserEmail)) {
+                return ResponseEntity.badRequest().body("Cannot change your own role");
+            }
+            
+            String upperRole = role.trim().toUpperCase();
+            Role newRole = roleRepository.findByName(upperRole).orElse(null);
+            if (newRole == null) {
+                return ResponseEntity.badRequest().body("Invalid role: " + upperRole);
+            }
+            
+            // Get current role to handle Student/Faculty record management
+            String currentRole = user.getRoles().stream()
+                .map(r -> r.getName())
+                .findFirst()
+                .orElse(null);
+            
+            // Remove existing Student/Faculty records if changing from STUDENT or FACULTY
+            if ("STUDENT".equals(currentRole)) {
+                com.ssid.collegeportal.model.Student student = studentRepository.findByUserId(userId);
+                if (student != null) {
+                    studentRepository.delete(student);
+                }
+            } else if ("FACULTY".equals(currentRole)) {
+                com.ssid.collegeportal.model.Faculty faculty = facultyRepository.findAll().stream()
+                    .filter(f -> f.getUser() != null && f.getUser().getId().equals(userId))
+                    .findFirst().orElse(null);
+                if (faculty != null) {
+                    facultyRepository.delete(faculty);
+                }
+            }
+            
+            // Update user role - create a new HashSet to avoid Hibernate collection issues
+            Set<Role> newRoles = new java.util.HashSet<>();
+            newRoles.add(newRole);
+            user.setRoles(newRoles);
+            userRepository.save(user);
+            
+            // Create new Student/Faculty record if needed
+            if ("STUDENT".equals(upperRole)) {
+                com.ssid.collegeportal.model.Student student = new com.ssid.collegeportal.model.Student();
+                student.setUser(user);
+                studentRepository.save(student);
+            } else if ("FACULTY".equals(upperRole)) {
+                com.ssid.collegeportal.model.Faculty faculty = new com.ssid.collegeportal.model.Faculty();
+                faculty.setUser(user);
+                facultyRepository.save(faculty);
+            }
+            
+            return ResponseEntity.ok("User role updated to " + upperRole);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body("Error updating user role: " + e.getMessage());
         }
-        String upperRole = role.trim().toUpperCase();
-        Role newRole = roleRepository.findByName(upperRole).orElse(null);
-        if (newRole == null) {
-            return ResponseEntity.badRequest().body("Invalid role");
-        }
-        user.setRoles(java.util.Collections.singleton(newRole));
-        userRepository.save(user);
-        return ResponseEntity.ok("User role updated to " + upperRole);
     }
 
     private UserResponseDTO toResponseDTO(User user) {

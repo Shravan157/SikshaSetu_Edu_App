@@ -14,6 +14,8 @@ import {
 import Modal from '../components/common/Modal';
 import ConfirmDialog from '../components/common/ConfirmDialog';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import SimplePagination from '../components/common/SimplePagination';
+import useSimplePagination from '../hooks/useSimplePagination';
 
 const Notes = () => {
   const { hasAnyRole } = useAuth();
@@ -104,26 +106,60 @@ const Notes = () => {
   const handleDownloadAttachment = async (noteId) => {
     try {
       const response = await noteAPI.downloadAttachment(noteId);
-      const url = window.URL.createObjectURL(new Blob([response.data]));
+
+      // Build filename from Content-Disposition (supports filename* and fallback) and ensure extension from content-type
+      const cd = response.headers['content-disposition'] || '';
+      let filename = null;
+
+      // Try RFC 5987 filename*
+      const fnStarMatch = cd.match(/filename\*=(?:UTF-8''|)([^;]+)/i);
+      if (fnStarMatch && fnStarMatch[1]) {
+        try {
+          filename = decodeURIComponent(fnStarMatch[1].trim().replace(/^\"|\"$/g, ''));
+        } catch (_) {
+          filename = fnStarMatch[1].trim().replace(/^\"|\"$/g, '');
+        }
+      }
+      // Fallback to filename=
+      if (!filename) {
+        const fnMatch = cd.match(/filename=([^;]+)/i);
+        if (fnMatch && fnMatch[1]) {
+          filename = fnMatch[1].trim().replace(/^\"|\"$/g, '');
+        }
+      }
+      if (!filename) filename = `note-attachment-${noteId}`;
+
+      // Ensure extension based on content-type if missing
+      const ct = response.headers['content-type'] || '';
+      const hasExt = /\.[a-zA-Z0-9]{2,8}$/.test(filename);
+      const extFromCT = ct.includes('pdf') ? '.pdf'
+                        : ct.includes('png') ? '.png'
+                        : ct.includes('jpeg') || ct.includes('jpg') ? '.jpg'
+                        : ct.includes('plain') ? '.txt'
+                        : ct.includes('msword') ? '.doc'
+                        : ct.includes('officedocument.wordprocessingml') ? '.docx'
+                        : ct.includes('excel') || ct.includes('spreadsheet') ? '.xlsx'
+                        : ct.includes('zip') ? '.zip'
+                        : '';
+      if (!hasExt && extFromCT) filename += extFromCT;
+
+      const url = window.URL.createObjectURL(response.data);
       const link = document.createElement('a');
       link.href = url;
-
-      // Get the actual filename from the response headers if available
-      const filename = response.headers['content-disposition']?.split('filename=')[1]?.replace(/"/g, '') ||
-                       `note-attachment-${noteId}`;
-
       link.setAttribute('download', filename);
       document.body.appendChild(link);
       link.click();
       link.remove();
-
-      // Clean up the object URL
       window.URL.revokeObjectURL(url);
     } catch (error) {
       toast.error('Failed to download attachment');
       console.error('Download error:', error);
     }
   };
+
+  // Use pagination hook
+  const pagination = useSimplePagination(notes, 5); // Show 5 notes per page
+  const { paginatedData: displayedNotes, currentPage, totalPages, totalItems, goToPage } = pagination;
 
   if (loading) {
     return <LoadingSpinner text="Loading notes..." />;
@@ -150,7 +186,7 @@ const Notes = () => {
 
       {/* Notes List */}
       <div className="space-y-4">
-        {notes.map((note) => (
+        {displayedNotes.map((note) => (
           <div key={note.id} className="card hover:shadow-md transition-shadow">
             <div className="flex justify-between items-start">
               <div className="flex-1">
@@ -227,6 +263,15 @@ const Notes = () => {
           )}
         </div>
       )}
+
+      {/* Pagination */}
+      <SimplePagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={goToPage}
+        itemsPerPage={5}
+        totalItems={totalItems}
+      />
 
       {/* Note Modal */}
       <Modal

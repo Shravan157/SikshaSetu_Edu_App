@@ -13,6 +13,8 @@ import {
 import Modal from '../components/common/Modal';
 import ConfirmDialog from '../components/common/ConfirmDialog';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import SimplePagination from '../components/common/SimplePagination';
+import useSimplePagination from '../hooks/useSimplePagination';
 
 const Students = () => {
   const { hasRole } = useAuth();
@@ -115,6 +117,10 @@ const Students = () => {
     return matchesSearch && matchesFilters;
   });
 
+  // Use pagination hook
+  const pagination = useSimplePagination(filteredStudents, 10);
+  const { paginatedData: displayedStudents, currentPage, totalPages, totalItems, goToPage } = pagination;
+
   if (loading) {
     return <LoadingSpinner text="Loading students..." />;
   }
@@ -200,7 +206,7 @@ const Students = () => {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {filteredStudents.map((student) => (
+            {displayedStudents.map((student) => (
               <tr key={student.id} className="hover:bg-gray-50">
                 <td className="table-cell">
                   <div className="font-medium text-gray-900">{student.userName}</div>
@@ -240,12 +246,21 @@ const Students = () => {
           </tbody>
         </table>
 
-        {filteredStudents.length === 0 && (
+        {displayedStudents.length === 0 && filteredStudents.length === 0 && (
           <div className="text-center py-8 text-gray-500">
             No students found
           </div>
         )}
       </div>
+
+      {/* Pagination */}
+      <SimplePagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={goToPage}
+        itemsPerPage={10}
+        totalItems={totalItems}
+      />
 
       {/* Student Modal */}
       <Modal

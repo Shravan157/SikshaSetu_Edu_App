@@ -17,6 +17,7 @@ const VideoCall = () => {
   const { user } = useAuth();
   const containerRef = useRef(null);
   const zpRef = useRef(null);
+  const destroyedRef = useRef(false);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -140,18 +141,29 @@ const VideoCall = () => {
 
     // Cleanup on unmount
     return () => {
-      if (zpRef.current) {
-        zpRef.current.destroy();
-      }
+      safeDestroy();
     };
   }, [roomId, user]);
 
-  const handleLeaveRoom = () => {
-    if (zpRef.current) {
-      zpRef.current.destroy();
+  const safeDestroy = () => {
+    if (destroyedRef.current) return;
+    try {
+      if (zpRef.current) {
+        zpRef.current.destroy();
+      }
+    } catch (e) {
+      console.warn('Zego destroy error (ignored):', e);
+    } finally {
+      destroyedRef.current = true;
+      zpRef.current = null;
     }
+  };
+
+  const handleLeaveRoom = () => {
+    safeDestroy();
     toast.info('Left the video call');
-    navigate('/dashboard'); // Navigate back to dashboard
+    // Defer navigation to avoid unmount/destroy race inside the SDK
+    setTimeout(() => navigate('/dashboard'), 0);
   };
 
   const handleRetry = () => {

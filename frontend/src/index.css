@@ -64,6 +64,10 @@ code {
   .card {
     @apply bg-white rounded-xl shadow-sm border border-secondary-200 p-6;
   }
+
+  .glass-card {
+    @apply bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/50 border border-secondary-200/60 shadow-sm rounded-xl;
+  }
   
   .table-container {
     @apply overflow-x-auto bg-white rounded-xl shadow-sm border border-secondary-200;

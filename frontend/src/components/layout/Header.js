@@ -75,77 +75,63 @@ const Header = ({ onMenuClick }) => {
   };
 
   return (
-    <header className="fixed top-0 right-0 left-0 bg-white shadow-sm border-b border-gray-200 lg:pl-64 z-40">
+    <header className="fixed top-0 right-0 left-0 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-secondary-200 lg:pl-72 z-40">
       <div className="flex items-center justify-between h-16 px-4 sm:px-6 lg:px-8">
-        {/* Mobile menu button */}
-        <button
-          onClick={onMenuClick}
-          className="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 lg:hidden"
-        >
-          <Bars3Icon className="w-6 h-6" />
-        </button>
+        {/* Left: menu + search */}
+        <div className="flex items-center gap-3 flex-1">
+          <button
+            onClick={onMenuClick}
+            className="p-2 rounded-md text-secondary-500 hover:text-secondary-700 hover:bg-secondary-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 lg:hidden"
+            aria-label="Open sidebar"
+          >
+            <Bars3Icon className="w-6 h-6" />
+          </button>
 
-        {/* Page title - will be updated by individual pages */}
-        <div className="flex-1 lg:flex lg:items-center lg:justify-between">
-          <h1 className="text-2xl font-semibold text-gray-900 hidden lg:block">
-            Dashboard
-          </h1>
         </div>
 
         {/* Right side */}
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center gap-2 sm:gap-4">
           {/* Notifications */}
           <div className="relative notification-dropdown">
             <button
               onClick={() => setShowNotifications(!showNotifications)}
-              className="p-2 text-gray-400 hover:text-gray-500 relative"
+              className="p-2 rounded-full hover:bg-secondary-100 text-secondary-600 relative"
+              aria-label="Notifications"
             >
               <BellIcon className="w-6 h-6" />
               {unreadCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                   {unreadCount > 9 ? '9+' : unreadCount}
                 </span>
               )}
             </button>
 
-            {/* Notifications dropdown */}
             {showNotifications && (
-              <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-                <div className="p-4 border-b border-gray-200">
+              <div className="fixed sm:absolute top-16 sm:top-auto right-2 sm:right-0 left-2 sm:left-auto w-[calc(100vw-1rem)] sm:w-80 bg-white rounded-xl shadow-xl border border-secondary-200 z-50 overflow-hidden">
+                <div className="p-4 border-b border-secondary-200 bg-secondary-50">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-medium">Notifications</h3>
+                    <h3 className="text-sm font-semibold text-secondary-900">Notifications</h3>
                     {unreadCount > 0 && (
                       <button
                         onClick={markAllAsRead}
-                        className="text-sm text-primary-600 hover:text-primary-700"
+                        className="text-xs text-primary-600 hover:text-primary-700"
                       >
                         Mark all read
                       </button>
                     )}
                   </div>
                 </div>
-                <div className="max-h-64 overflow-y-auto">
+                <div className="max-h-[60vh] overflow-y-auto">
                   {notifications.length > 0 ? (
                     notifications.map((notification) => (
-                      <div
-                        key={notification.id}
-                        className="p-4 border-b border-gray-100 hover:bg-gray-50"
-                      >
-                        <h4 className="text-sm font-medium text-gray-900">
-                          {notification.title}
-                        </h4>
-                        <p className="text-sm text-gray-600 mt-1">
-                          {notification.message}
-                        </p>
-                        <p className="text-xs text-gray-400 mt-2">
-                          {new Date(notification.createdAt).toLocaleDateString()}
-                        </p>
+                      <div key={notification.id} className="p-4 border-b border-secondary-100 hover:bg-secondary-50">
+                        <h4 className="text-sm font-medium text-secondary-900">{notification.title}</h4>
+                        <p className="text-sm text-secondary-600 mt-1">{notification.message}</p>
+                        <p className="text-xs text-secondary-400 mt-2">{new Date(notification.createdAt).toLocaleDateString()}</p>
                       </div>
                     ))
                   ) : (
-                    <div className="p-4 text-center text-gray-500">
-                      No new notifications
-                    </div>
+                    <div className="p-6 text-center text-secondary-500 text-sm">No new notifications</div>
                   )}
                 </div>
               </div>
@@ -156,27 +142,28 @@ const Header = ({ onMenuClick }) => {
           <div className="relative user-dropdown">
             <button
               onClick={() => setShowUserMenu(!showUserMenu)}
-              className="flex items-center space-x-2 text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none"
+              className="flex items-center gap-2 text-sm font-medium text-secondary-700 hover:text-secondary-900 focus:outline-none"
+              aria-haspopup="menu"
+              aria-expanded={showUserMenu}
             >
-              <UserCircleIcon className="w-8 h-8 text-gray-400" />
+              <UserCircleIcon className="w-8 h-8 text-secondary-400" />
               <div className="hidden sm:block text-left">
-                <div className="text-sm font-medium text-gray-900">{user?.email}</div>
-                <div className="text-xs text-gray-500">{getUserRole()}</div>
+                <div className="text-sm font-semibold text-secondary-900">{user?.email}</div>
+                <div className="text-xs text-secondary-500">{getUserRole()}</div>
               </div>
-              <ChevronDownIcon className="w-4 h-4 text-gray-400" />
+              <ChevronDownIcon className="w-4 h-4 text-secondary-400" />
             </button>
 
-            {/* User dropdown */}
             {showUserMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-                <div className="p-4 border-b border-gray-200">
-                  <div className="text-sm font-medium text-gray-900">{user?.email}</div>
-                  <div className="text-xs text-gray-500">{getUserRole()}</div>
+              <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-secondary-200 z-50 overflow-hidden">
+                <div className="p-4 border-b border-secondary-200">
+                  <div className="text-sm font-semibold text-secondary-900">{user?.email}</div>
+                  <div className="text-xs text-secondary-500">{getUserRole()}</div>
                 </div>
                 <div className="py-2">
                   <button
                     onClick={handleLogout}
-                    className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    className="flex items-center w-full px-4 py-2 text-sm text-secondary-700 hover:bg-secondary-50"
                   >
                     <ArrowRightOnRectangleIcon className="w-4 h-4 mr-2" />
                     Sign out

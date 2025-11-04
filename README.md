@@ -290,19 +290,5 @@ The project can be containerized using Docker:
 
 ---
 
-## 📄 License
-MIT (see frontend/README.md). If you need a root‑level LICENSE file, we can add one.
-
----
-
-## 📷 Screenshots (optional)
-You can drop screenshots in `docs/` and reference them here.
-
-- Dashboard
-- Virtual Classroom
-- Chatbot
-
----
-
 ## ❤️ Created with Love
-This project was created with ❤️ by Shravan
+created with ❤️ by Shravan

@@ -1,4 +1,4 @@
-# SikshaSetu (Education and Management Application)
+# SikshaSetu 
 
 A modern, full‑stack portal for colleges and schools — user management, attendance, results, events, notes, notifications, AI assistant, and a virtual classroom powered by ZEGOCLOUD.
 

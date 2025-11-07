@@ -3,7 +3,7 @@
 A modern, full‑stack portal for colleges and schools — user management, attendance, results, events, notes, notifications, AI assistant, and a virtual classroom powered by ZEGOCLOUD.
 
 <p align="center">
-  <img alt="EducationApp" src="frontend/Logo_Setu.png" width="120" />
+  <img alt="EducationApp" src="frontend/logo.png" width="120" />
 </p>
 
 <p align="center">

@@ -8,7 +8,11 @@ Java 17 · Spring Boot 3 · Maven · MySQL · JWT · React 18 · Tailwind CSS ·
 
 ## 🎬 Demo Video
 
-[📹 Watch Demo Video](https://github.com/Shravan157/SikshaSetu_Edu_App/blob/main/frontend/public/WhatsApp%20Video%202025-10-29%20at%202%20(1).mp4)
+> **Note:** Due to file size, please download the demo video to view it locally, or watch it via Google Drive/YouTube.
+
+**Options to view the demo:**
+- [📥 Download Demo Video](https://github.com/Shravan157/SikshaSetu_Edu_App/raw/main/frontend/public/WhatsApp%20Video%202025-10-29%20at%202%20(1).mp4) (Click to download)
+- Upload to YouTube/Google Drive and add link here for easier viewing
 
 ---
 

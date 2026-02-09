@@ -1,34 +1,31 @@
-# SikshaSetu 
+SikshaSetu
 A modern, full‑stack portal for colleges and schools — user management, attendance, results, events, notes, notifications, AI assistant, and a virtual classroom powered by ZEGOCLOUD.
 
-**Java 17 · Spring Boot 3 · Maven · MySQL · JWT · React 18 · Tailwind CSS · ZEGOCLOUD UI Kit**
+Java 17 · Spring Boot 3 · Maven · MySQL · JWT · React 18 · Tailwind CSS · ZEGOCLOUD UI Kit
 
----
+🎬 Demo Video
+Check out SikshaSetu in action! Watch the complete walkthrough of features including authentication, virtual classroom, AI chatbot, and more.
 
-## 🎬 Demo Video
+📺 Watch Demo Video
 
-https://github.com/Shravan157/SikshaSetu_Edu_App/assets/demo-video.mp4
+<video src="https://github.com/Shravan157/SikshaSetu_Edu_App/raw/main/frontend/public/WhatsApp%20Video%202025-10-29%20at%202%20(1).mp4" controls width="100%"> Your browser does not support the video tag. Please <a href="https://github.com/Shravan157/SikshaSetu_Edu_App/blob/main/frontend/public/WhatsApp%20Video%202025-10-29%20at%202%20(1).mp4">click here to watch the demo</a>. </video>
+✨ Features
+🔐 Authentication & Authorization - JWT login/registration, role‑based access (Admin, Faculty, Student)
 
-*Click to watch the full demonstration of SikshaSetu features including authentication, dashboard, virtual classroom, and AI chatbot.*
+👥 Administration - Users, Students, Faculty, Branches with CRUD and search/filter
 
-**Alternative:** [📹 View Demo Video](https://github.com/Shravan157/SikshaSetu_Edu_App/blob/main/frontend/public/WhatsApp%20Video%202025-10-29%20at%202%20(1).mp4)
+📝 Notes, 📅 Events, 🔔 Notifications
 
----
+📊 Results and Attendance
 
-## ✨ Features
+🤖 AI Chatbot (Perplexity API) with clean Markdown answers and code blocks
 
-- 🔐 **Authentication & Authorization** - JWT login/registration, role‑based access (Admin, Faculty, Student)
-- 👥 **Administration** - Users, Students, Faculty, Branches with CRUD and search/filter
-- 📝 **Notes**, 📅 **Events**, 🔔 **Notifications**
-- 📊 **Results and Attendance**
-- 🤖 **AI Chatbot** (Perplexity API) with clean Markdown answers and code blocks
-- 🎥 **Virtual Classroom** - Schedule, Start/End, Join sessions (teacher & students)
-  - ZEGOCLOUD prebuilt UI with copy‑link joining
+🎥 Virtual Classroom - Schedule, Start/End, Join sessions (teacher & students)
 
----
+ZEGOCLOUD prebuilt UI with copy‑link joining
 
-## 🧭 Repository Layout
-```
+🧭 Repository Layout
+text
 CollegePortal/
 ├── src/                    # Spring Boot backend
 │   ├── main/java/com/ssid/collegeportal
@@ -36,313 +33,330 @@ CollegePortal/
 ├── frontend/               # React app (Create React App + Tailwind)
 │   ├── src/
 │   ├── public/
-│   └── .env                # local env (ignored)
+│   └── .env               # local env (ignored)
 └── pom.xml, mvnw, mvnw.cmd # Maven wrapper
-```
+⚙️ Tech Stack
+Backend: Spring Boot 3 (Web, JPA, Security), Flyway, Lombok, MySQL
 
----
+Auth: JWT (custom provider & filter)
 
-## ⚙️ Tech Stack
+Frontend: React 18, react‑router, Tailwind CSS, react‑markdown, highlight.js
 
-- **Backend:** Spring Boot 3 (Web, JPA, Security), Flyway, Lombok, MySQL
-- **Auth:** JWT (custom provider & filter)
-- **Frontend:** React 18, react‑router, Tailwind CSS, react‑markdown, highlight.js
-- **Video:** ZEGOCLOUD UI Kit (virtual classroom)
-- **AI:** Perplexity API (via Spring service)
+Video: ZEGOCLOUD UI Kit (virtual classroom)
 
----
+AI: Perplexity API (via Spring service)
 
-## 🏗️ Architecture Overview
+🏗️ Architecture Overview
+Backend Architecture
+Framework: Spring Boot 3 with MVC pattern
 
-### Backend Architecture
-- **Framework:** Spring Boot 3 with MVC pattern
-- **Security:** JWT-based authentication with Spring Security
-- **Database:** MySQL with JPA/Hibernate and Flyway migrations
-- **API:** RESTful endpoints with role-based authorization
-- **Services:** Modular service layer for business logic
-- **Video Integration:** ZegoCloud SDK for real-time video conferencing
+Security: JWT-based authentication with Spring Security
 
-### Frontend Architecture
-- **Framework:** React 18 with hooks and functional components
-- **Routing:** React Router for client-side navigation
-- **Styling:** Tailwind CSS for responsive design
-- **State Management:** React Context for authentication
-- **UI Components:** Headless UI and Heroicons for consistent design
-- **Video UI:** ZegoCloud Prebuilt UI Kit for seamless video calls
+Database: MySQL with JPA/Hibernate and Flyway migrations
 
-### Database Schema
+API: RESTful endpoints with role-based authorization
+
+Services: Modular service layer for business logic
+
+Video Integration: ZegoCloud SDK for real-time video conferencing
+
+Frontend Architecture
+Framework: React 18 with hooks and functional components
+
+Routing: React Router for client-side navigation
+
+Styling: Tailwind CSS for responsive design
+
+State Management: React Context for authentication
+
+UI Components: Headless UI and Heroicons for consistent design
+
+Video UI: ZegoCloud Prebuilt UI Kit for seamless video calls
+
+Database Schema
 The application uses MySQL with the following key entities:
-- **Users:** Authentication and role management (Admin, Faculty, Student)
-- **Branches:** College branch/department management
-- **Students/Faculty:** Extended user profiles
-- **Attendance:** Student attendance records
-- **Results:** Academic results and grades
-- **Events:** College events and announcements
-- **Notes:** Study materials organized by subject
-- **Notifications:** System notifications
-- **Video Sessions:** Virtual classroom sessions with ZegoCloud integration
 
----
+Users: Authentication and role management (Admin, Faculty, Student)
 
-## 🧑‍💻 Quick Start
+Branches: College branch/department management
 
-### Prerequisites
-- Java 17+, Maven
-- Node 16+ (18 recommended), npm
-- MySQL 8+ (or compatible)
+Students/Faculty: Extended user profiles
 
-### 1) Backend setup
+Attendance: Student attendance records
 
-1. **Create your local config from the example:**
-   - Copy `src/main/resources/application-example.properties` → `src/main/resources/application.properties`
+Results: Academic results and grades
 
-2. **Edit the values:**
-   - Database: `spring.datasource.*`
-   - JWT: `jwt.secret`
-   - ZEGOCLOUD (server token, production‑grade): `zego.app.id`, `zego.server.secret`
-   - Perplexity (optional for chatbot): `perplexity.api.key`
+Events: College events and announcements
 
-3. **Run the server:**
-   - Windows: `mvnw.cmd spring-boot:run`
-   - Mac/Linux: `./mvnw spring-boot:run`
+Notes: Study materials organized by subject
 
-**Notes:**
-- DB migrations are applied via Flyway (files in `src/main/resources/db/migration`).
-- Default CORS allows http://localhost:3000.
+Notifications: System notifications
 
-### 2) Frontend setup
+Video Sessions: Virtual classroom sessions with ZegoCloud integration
 
-1. **Create env from the example:**
-   - Copy `frontend/.env.example` → `frontend/.env`
+🧑‍💻 Quick Start
+Prerequisites
+Java 17+, Maven
 
-2. **Edit the values:**
-   - `REACT_APP_API_URL` (default `http://localhost:8080/api`)
-   - For local virtual classroom via ZEGOCLOUD Prebuilt UI (dev only):
-     - `REACT_APP_ZEGO_APP_ID` and `REACT_APP_ZEGO_APP_SIGN`
+Node 16+ (18 recommended), npm
 
-3. **Install & run:**
-```bash
-   cd frontend
-   npm install
-   npm start
-```
+MySQL 8+ (or compatible)
 
----
+1) Backend setup
+Create your local config from the example:
 
-## 🎥 Virtual Classroom (ZEGOCLOUD)
+Copy src/main/resources/application-example.properties → src/main/resources/application.properties
 
-**Two ways to use tokens:**
+Edit the values:
 
-- **Dev (quick):** Frontend generates a Kit Token using `REACT_APP_ZEGO_APP_SIGN`. Make sure your Zego console project whitelists `http://localhost:3000` and enables the Web Prebuilt/RTC product.
-- **Prod (secure):** Backend generates tokens using `zego.server.secret`, and the frontend requests them (already wired if you switch to server tokens).
+Database: spring.datasource.*
 
-**Flow:**
-1. **Faculty:** Virtual Classroom → Schedule → Start Now → joins `/video-call/:roomId`
-2. **Students:** Join page → enter Room ID or open the copied invite link `/join/:roomId`
+JWT: jwt.secret
 
-If you see Zego errors like `20014/50119/50120`, verify in Zego console:
-- Web product is enabled for your AppId
-- Your origin (localhost:3000) is whitelisted
-- AppSign/AppId pair matches the project
+ZEGOCLOUD (server token, production‑grade): zego.app.id, zego.server.secret
 
----
+Perplexity (optional for chatbot): perplexity.api.key
 
-## 🔌 API Endpoints
+Run the server:
 
-### Authentication
-- `POST /api/auth/login` - User login
-- `POST /api/auth/register` - User registration
-- `POST /api/auth/request-password-reset` - Request password reset
-- `POST /api/auth/reset-password` - Reset password
+Windows: mvnw.cmd spring-boot:run
 
-### User Management (Admin)
-- `GET /api/users` - List all users
-- `POST /api/users` - Create user
-- `PUT /api/users/{id}` - Update user
-- `DELETE /api/users/{id}` - Delete user
+Mac/Linux: ./mvnw spring-boot:run
 
-### Student Management
-- `GET /api/students` - List students
-- `POST /api/students` - Create student
-- `PUT /api/students/{id}` - Update student
-- `DELETE /api/students/{id}` - Delete student
+Notes:
 
-### Faculty Management
-- `GET /api/faculty` - List faculty
-- `POST /api/faculty` - Create faculty
-- `PUT /api/faculty/{id}` - Update faculty
-- `DELETE /api/faculty/{id}` - Delete faculty
+DB migrations are applied via Flyway (files in src/main/resources/db/migration).
 
-### Branch Management
-- `GET /api/branches` - List branches
-- `POST /api/branches` - Create branch
-- `PUT /api/branches/{id}` - Update branch
-- `DELETE /api/branches/{id}` - Delete branch
+Default CORS allows http://localhost:3000.
 
-### Attendance
-- `GET /api/attendance` - Get attendance records
-- `POST /api/attendance` - Mark attendance
+2) Frontend setup
+Create env from the example:
 
-### Results
-- `GET /api/results` - Get results
-- `POST /api/results` - Add result
-- `PUT /api/results/{id}` - Update result
+Copy frontend/.env.example → frontend/.env
 
-### Events
-- `GET /api/events` - List events
-- `POST /api/events` - Create event
-- `PUT /api/events/{id}` - Update event
-- `DELETE /api/events/{id}` - Delete event
+Edit the values:
 
-### Notes
-- `GET /api/notes` - List notes
-- `POST /api/notes` - Create note
-- `PUT /api/notes/{id}` - Update note
-- `DELETE /api/notes/{id}` - Delete note
+REACT_APP_API_URL (default http://localhost:8080/api)
 
-### Notifications
-- `GET /api/notifications` - List notifications
-- `POST /api/notifications` - Create notification
-- `PUT /api/notifications/{id}` - Update notification
+For local virtual classroom via ZEGOCLOUD Prebuilt UI (dev only):
 
-### Virtual Classroom
-- `POST /api/video-sessions` - Create video session (Faculty)
-- `POST /api/video-sessions/{roomId}/join` - Join session (Student/Faculty)
-- `GET /api/video-sessions/{roomId}` - Get session details
-- `GET /api/video-sessions/teacher/{teacherId}` - Get teacher's sessions
-- `POST /api/video-sessions/{roomId}/start` - Start session
-- `POST /api/video-sessions/{roomId}/end` - End session
-- `POST /api/video-sessions/zego/token` - Generate Zego token
+REACT_APP_ZEGO_APP_ID and REACT_APP_ZEGO_APP_SIGN
 
-### Chatbot
-- `POST /api/chatbot/ask` - Ask AI question
+Install & run:
 
----
+cd frontend
 
-## 🤖 Chatbot
+npm install
 
-- Renders clean Markdown with headings, bullets, and syntax‑highlighted code blocks.
-- To enable Perplexity‑based responses, set `perplexity.api.key` in backend config.
+npm start
 
----
+🎥 Virtual Classroom (ZEGOCLOUD)
+Two ways to use tokens:
 
-## 🧪 Scripts & Commands
+Dev (quick): Frontend generates a Kit Token using REACT_APP_ZEGO_APP_SIGN. Make sure your Zego console project whitelists http://localhost:3000 and enables the Web Prebuilt/RTC product.
 
-**Backend**
-- Run: `mvnw.cmd spring-boot:run`
+Prod (secure): Backend generates tokens using zego.server.secret, and the frontend requests them (already wired if you switch to server tokens).
 
-**Frontend** (from `frontend/`)
-- Dev server: `npm start`
-- Build: `npm run build`
-- Test: `npm test`
+Flow:
 
----
+Faculty: Virtual Classroom → Schedule → Start Now → joins /video-call/:roomId
 
-## 🔐 Secrets & Local Configuration
+Students: Join page → enter Room ID or open the copied invite link /join/:roomId
 
-- Never commit `frontend/.env` or `src/main/resources/application.properties` — both are ignored.
-- Share `frontend/.env.example` and `application-example.properties` with collaborators.
+If you see Zego errors like 20014/50119/50120, verify in Zego console:
 
----
+Web product is enabled for your AppId
 
-## 🚀 Deployment
+Your origin (localhost:3000) is whitelisted
 
-### Backend Deployment
+AppSign/AppId pair matches the project
 
-1. **Build the application:**
-```bash
-   mvnw clean package
-```
+🔌 API Endpoints
+Authentication
+POST /api/auth/login - User login
 
-2. **Run with production profile:**
-```bash
-   java -jar target/CollegePortal-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
-```
+POST /api/auth/register - User registration
 
-3. **Environment Variables for Production:**
-   - Set up MySQL database
-   - Configure JWT secret
-   - Set ZegoCloud credentials
-   - Configure Perplexity API key (optional)
-   - Set upload directory path
+POST /api/auth/request-password-reset - Request password reset
 
-### Frontend Deployment
+POST /api/auth/reset-password - Reset password
 
-1. **Build for production:**
-```bash
-   cd frontend
-   npm run build
-```
+User Management (Admin)
+GET /api/users - List all users
 
-2. **Serve static files:**
-   - Deploy `build/` folder to web server (nginx, Apache, etc.)
-   - Or use `serve -s build` for simple deployment
+POST /api/users - Create user
 
-### Docker Deployment (Optional)
+PUT /api/users/{id} - Update user
 
+DELETE /api/users/{id} - Delete user
+
+Student Management
+GET /api/students - List students
+
+POST /api/students - Create student
+
+PUT /api/students/{id} - Update student
+
+DELETE /api/students/{id} - Delete student
+
+Faculty Management
+GET /api/faculty - List faculty
+
+POST /api/faculty - Create faculty
+
+PUT /api/faculty/{id} - Update faculty
+
+DELETE /api/faculty/{id} - Delete faculty
+
+Branch Management
+GET /api/branches - List branches
+
+POST /api/branches - Create branch
+
+PUT /api/branches/{id} - Update branch
+
+DELETE /api/branches/{id} - Delete branch
+
+Attendance
+GET /api/attendance - Get attendance records
+
+POST /api/attendance - Mark attendance
+
+Results
+GET /api/results - Get results
+
+POST /api/results - Add result
+
+PUT /api/results/{id} - Update result
+
+Events
+GET /api/events - List events
+
+POST /api/events - Create event
+
+PUT /api/events/{id} - Update event
+
+DELETE /api/events/{id} - Delete event
+
+Notes
+GET /api/notes - List notes
+
+POST /api/notes - Create note
+
+PUT /api/notes/{id} - Update note
+
+DELETE /api/notes/{id} - Delete note
+
+Notifications
+GET /api/notifications - List notifications
+
+POST /api/notifications - Create notification
+
+PUT /api/notifications/{id} - Update notification
+
+Virtual Classroom
+POST /api/video-sessions - Create video session (Faculty)
+
+POST /api/video-sessions/{roomId}/join - Join session (Student/Faculty)
+
+GET /api/video-sessions/{roomId} - Get session details
+
+GET /api/video-sessions/teacher/{teacherId} - Get teacher's sessions
+
+POST /api/video-sessions/{roomId}/start - Start session
+
+POST /api/video-sessions/{roomId}/end - End session
+
+POST /api/video-sessions/zego/token - Generate Zego token
+
+Chatbot
+POST /api/chatbot/ask - Ask AI question
+
+🤖 Chatbot
+Renders clean Markdown with headings, bullets, and syntax‑highlighted code blocks.
+
+To enable Perplexity‑based responses, set perplexity.api.key in backend config.
+
+🧪 Scripts & Commands
+Backend
+
+Run: mvnw.cmd spring-boot:run
+
+Frontend (from frontend/)
+
+Dev server: npm start
+
+Build: npm run build
+
+Test: npm test
+
+🔐 Secrets & Local Configuration
+Never commit frontend/.env or src/main/resources/application.properties — both are ignored.
+
+Share frontend/.env.example and application-example.properties with collaborators.
+
+🚀 Deployment
+Backend Deployment
+Build the application:
+
+bash
+mvnw clean package
+Run with production profile:
+
+bash
+java -jar target/CollegePortal-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+Environment Variables for Production:
+
+Set up MySQL database
+
+Configure JWT secret
+
+Set ZegoCloud credentials
+
+Configure Perplexity API key (optional)
+
+Set upload directory path
+
+Frontend Deployment
+Build for production:
+
+bash
+cd frontend
+npm run build
+Serve static files:
+
+Deploy build/ folder to web server (nginx, Apache, etc.)
+
+Or use serve -s build for simple deployment
+
+Docker Deployment (Optional)
 The project can be containerized using Docker:
-- Create Dockerfile for backend
-- Create Dockerfile for frontend
-- Use docker-compose for orchestration
 
-### Production Considerations
-- Use HTTPS in production
-- Configure CORS for your domain
-- Set up proper logging
-- Implement rate limiting
-- Regular database backups
-- Monitor application performance
+Create Dockerfile for backend
 
----
+Create Dockerfile for frontend
 
-## 🤝 Contributing
+Use docker-compose for orchestration
 
-1. Fork → create a feature branch → commit → open PR.
-2. Keep backend and frontend running locally to verify flows end‑to‑end.
-3. For large UI changes, attach screenshots/GIFs.
+Production Considerations
+Use HTTPS in production
 
----
+Configure CORS for your domain
 
-## 📸 Screenshots
+Set up proper logging
 
-### Login Page
-*Add screenshots of your application here*
+Implement rate limiting
 
-### Dashboard
-*Add dashboard screenshot*
+Regular database backups
 
-### Virtual Classroom
-*Add virtual classroom screenshot*
+Monitor application performance
 
-### AI Chatbot
-*Add chatbot screenshot*
+🤝 Contributing
+Fork → create a feature branch → commit → open PR.
 
----
+Keep backend and frontend running locally to verify flows end‑to‑end.
 
-## 📄 License
+For large UI changes, attach screenshots/GIFs.
 
-This project is licensed under the MIT License - see the LICENSE file for details.
-
----
-
-## 📧 Contact
-
-**Shravan** - [GitHub](https://github.com/Shravan157)
-
-Project Link: [https://github.com/Shravan157/SikshaSetu_Edu_App](https://github.com/Shravan157/SikshaSetu_Edu_App)
-
----
-
-## ❤️ Created with Love
-
-Created with ❤️ by **Shravan**
-
----
-
-## 🙏 Acknowledgments
-
-- Spring Boot Team for the excellent framework
-- ZEGOCLOUD for the video conferencing solution
-- React Team for the amazing frontend library
-- Perplexity AI for the chatbot API
-- All contributors and supporters of this project
+❤️ Created with Love
+created with ❤️ by Shravan
